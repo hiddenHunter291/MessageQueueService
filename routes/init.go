@@ -10,6 +10,7 @@ func InitializeRoutes(server *gin.RouterGroup) {
 	wire.BuildHandler()
 
 	createUserRoutes(server)
+	createProductRoutes(server)
 }
 
 func GetRegisteredRoutes(server *gin.Engine) {
