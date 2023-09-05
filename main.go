@@ -10,8 +10,8 @@ import (
 
 func main() {
 	fmt.Println("--------------------Starting Ecommerce Service--------------------")
-	config.InitializeDB()
 	config.InitializeEnv()
+	config.InitializeDB()
 
 	server := gin.New()
 	group := server.Group("/api/ecommerce")

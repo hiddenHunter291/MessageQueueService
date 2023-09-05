@@ -15,5 +15,5 @@ func InitializeEnv() {
 	Env = &envData{
 		MariaDBConn: os.Getenv("databaseConnection"),
 	}
-	fmt.Println("Env details : ", Env)
+	fmt.Println("Envs Initialized successfully")
 }
