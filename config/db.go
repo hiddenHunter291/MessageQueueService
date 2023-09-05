@@ -13,7 +13,7 @@ var MariaDB *gorm.DB
 func InitializeDB() {
 	db, err := gorm.Open(mysql.Open(Env.MariaDBConn+fmt.Sprintf("?%s", "&parseTime=True")), &gorm.Config{
 		SkipDefaultTransaction: false,
-		NamingStrategy:         schema.NamingStrategy{SingularTable: true, TablePrefix: "ecommerce."},
+		NamingStrategy:         schema.NamingStrategy{SingularTable: true},
 	})
 
 	if err != nil {

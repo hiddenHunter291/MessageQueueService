@@ -23,11 +23,11 @@ func NewUserRepo() UserRepo {
 }
 
 func (u *userRepo) GetUserId(userId int) (models.User, error) {
-	log.Print("In Repo - GetUserId")
+	log.Print("In Repo - function GetUserId")
 
 	var result models.User
 	query := u.db.Debug().
-		Table("user").
+		Table("users").
 		Where("id = ?", userId).
 		Scan(&result)
 
@@ -35,10 +35,21 @@ func (u *userRepo) GetUserId(userId int) (models.User, error) {
 		return models.User{}, query.Error
 	}
 
-	log.Print("Out Repo - GetUserId")
+	log.Print("Out Repo - function GetUserId")
 	return result, nil
 }
 
 func (u *userRepo) Set(user models.User) error {
-	panic("implement me")
+	log.Print("In Repo - function Set")
+
+	query := u.db.Debug().
+		Table("users").
+		Create(&user)
+
+	if query.Error != nil {
+		return query.Error
+	}
+
+	log.Print("Out Repo - function Set")
+	return nil
 }

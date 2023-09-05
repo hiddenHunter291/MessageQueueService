@@ -7,8 +7,8 @@ var (
 )
 
 func BuildHandler() {
-	buildService()
 	buildRepo()
+	buildService()
 
 	UserController = controller.NewUserController(UserService)
 }

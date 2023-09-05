@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"log"
+	"message_queue_service/models"
 	"message_queue_service/service"
 	"net/http"
 	"strconv"
@@ -24,7 +25,7 @@ func NewUserController(userService service.UserService) UserController {
 }
 
 func (u *userController) Get(c *gin.Context) {
-	log.Print("In controller - Get")
+	log.Print("In controller - function Get")
 
 	userId := c.Param("id")
 	id, err := strconv.ParseInt(userId, 10, 32)
@@ -38,10 +39,25 @@ func (u *userController) Get(c *gin.Context) {
 		return
 	}
 
-	log.Print("Out controller - Get")
+	log.Print("Out controller - function Get")
 	c.JSON(http.StatusOK, gin.H{"user": result})
 }
 
 func (u *userController) Set(c *gin.Context) {
-	panic("implement me")
+	log.Print("In controller - function Set")
+
+	var input models.User
+	err := c.BindJSON(&input)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	servErr := u.userService.Set(input)
+	if servErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": servErr.Error()})
+		return
+	}
+
+	log.Print("Out controller - function Set")
+	c.JSON(http.StatusOK, gin.H{"msg": "user created successfully"})
 }

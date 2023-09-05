@@ -1,7 +1,6 @@
 package models
 
 type User struct {
-	Id           int     `json:"id" gorm:"id"`
 	Name         string  `json:"name" gorm:"name"`
 	MobileNumber int     `json:"mobileNumber" gorm:"mobile_number"`
 	Latitude     float64 `json:"latitude" gorm:"latitude"`
