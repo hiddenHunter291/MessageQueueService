@@ -9,6 +9,6 @@ func createUserRoutes(server *gin.RouterGroup) {
 	user := server.Group("/user")
 
 	// user routes
-	user.GET("/all", wire.UserController.Get)
+	user.GET("/:id", wire.UserController.Get)
 	user.POST("", wire.UserController.Set)
 }
