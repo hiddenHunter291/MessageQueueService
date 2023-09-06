@@ -39,6 +39,7 @@ func StartConsumer() {
 			fmt.Printf("kafka Error | Code : %v | Error : %v\n", e.Code(), e.Error())
 			if e.Code() == kafka.ErrAllBrokersDown {
 				run = false
+				close(jobs)
 			}
 
 		default:
