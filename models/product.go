@@ -21,3 +21,9 @@ type Order struct {
 	UserID    int `json:"userID" gorm:"column:user_id;type:bigint(20);NOT NULL"`
 	ProductID int `json:"productID" gorm:"column:product_id;type:bigint(20);NOT NULL"`
 }
+
+type CompressedProductPath struct {
+	ID        int    `json:"id" gorm:"autoIncrement:primaryKey"`
+	ProductID int    `json:"productId" gorm:"product_id"`
+	Path      string `json:"path" gorm:"path"`
+}

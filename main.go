@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"message_queue_service/config"
+	"message_queue_service/consumer"
 	"message_queue_service/routes"
 	"net/http"
 )
@@ -12,6 +13,10 @@ func main() {
 	fmt.Println("--------------------Starting Ecommerce Service--------------------")
 	config.InitializeEnv()
 	config.InitializeDB()
+	config.InitializeProducer()
+	config.InitializeConsumer()
+
+	go consumer.StartConsumer()
 
 	server := gin.New()
 	group := server.Group("/api/ecommerce")

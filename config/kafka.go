@@ -13,6 +13,8 @@ var (
 func InitializeConsumer() {
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers": Env.KafkaServer,
+		"group.id":          "myGroup",
+		"auto.offset.reset": "earliest",
 	})
 
 	if err != nil {
