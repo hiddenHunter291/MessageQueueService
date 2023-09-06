@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	totalWorkers = 1
+	totalWorkers = 5
 )
 
 func spawnWorkers(jobs chan string, numOfWorkers int) {
