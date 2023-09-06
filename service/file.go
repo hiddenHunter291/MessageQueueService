@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 	"time"
 )
 
@@ -26,7 +27,9 @@ func NewFileService() FileService {
 
 func (f *fileService) DownloadAndCompress(url string, fileName string) error {
 	log.Print("In service - function DownloadAndCompress")
-	zipFileName := "sample.zip"
+
+	zipExtension := ".zip"
+	zipFileName := strings.TrimSuffix(fileName, ".png") + zipExtension
 
 	res, resErr := http.Get(url)
 	if resErr != nil {
