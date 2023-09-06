@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
 	"strings"
 	"time"
 )
@@ -89,12 +88,12 @@ func (f *fileService) DownloadAndCompress(url string, fileName string) error {
 func (f *fileService) GetFilePath(fileName string) (string, error) {
 	log.Print("In service - function GetFilePath")
 
-	cmd := exec.Command("pwd")
-	path, err := cmd.CombinedOutput()
+	dirPath, err := os.Getwd()
 	if err != nil {
 		return "", err
 	}
+	path := dirPath + "/" + fileName
 
 	log.Print("Out service - function GetFilePath")
-	return string(path) + fileName, nil
+	return path, nil
 }

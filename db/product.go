@@ -99,6 +99,7 @@ func (p *productRepo) GetProductURLs(productID int) ([]string, error) {
 	urls := make([]string, 0)
 	query := p.db.Debug().
 		Table("product_links").
+		Select("link").
 		Where("product_id = ?", productID).
 		Scan(&urls)
 

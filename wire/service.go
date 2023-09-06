@@ -10,6 +10,6 @@ var (
 
 func buildService() {
 	UserService = service.NewUserService(UserRepo)
-	ProductService = service.NewProductService(ProductRepo)
 	FileService = service.NewFileService()
+	ProductService = service.NewProductService(ProductRepo, FileService)
 }
