@@ -38,7 +38,7 @@ CREATE TABLE `product_links`
 (
     `id` bigint(20) NOT NULL auto_increment,
     `product_id` bigint(20) NOT NULL,
-    `link` varchar(200) NOT NULL,
+    `link` varchar(2000) NOT NULL,
     foreign key (`product_id`) references products(`id`),
     primary key (`id`)
 );
