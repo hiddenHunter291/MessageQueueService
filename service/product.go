@@ -1,12 +1,10 @@
 package service
 
 import (
-	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	"log"
-	"message_queue_service/config"
 	"message_queue_service/db"
 	"message_queue_service/models"
-	"strconv"
+	"message_queue_service/producer"
 	"time"
 )
 
@@ -15,14 +13,14 @@ type ProductService interface {
 }
 
 type productService struct {
-	fileService FileService
-	productRepo db.ProductRepo
+	productRepo   db.ProductRepo
+	kafkaProducer producer.Producer
 }
 
-func NewProductService(productRepo db.ProductRepo, fileService FileService) ProductService {
+func NewProductService(productRepo db.ProductRepo, kafkaProducer producer.Producer) ProductService {
 	return &productService{
-		fileService: fileService,
-		productRepo: productRepo,
+		productRepo:   productRepo,
+		kafkaProducer: kafkaProducer,
 	}
 }
 
@@ -41,8 +39,8 @@ func (p *productService) Create(order models.OrderInfo) error {
 		ProductDescription: order.ProductDescription,
 		ProductPrice:       order.ProductPrice,
 		ProductLinks:       productLinks,
-		CreatedAt:          time.Now().UnixMilli(),
-		UpdatedAt:          time.Now().UnixMilli(),
+		CreatedAt:          time.Now().Unix(),
+		UpdatedAt:          time.Now().Unix(),
 	}
 
 	err = p.productRepo.CreateProduct(product)
@@ -60,10 +58,7 @@ func (p *productService) Create(order models.OrderInfo) error {
 		return getErr
 	}
 
-	kfkErr := config.KafkaProducer.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &config.Env.KafkaTopic, Partition: kafka.PartitionAny},
-		Key:            []byte(strconv.Itoa(productID)),
-	}, nil)
+	kfkErr := p.kafkaProducer.ProduceEvent(productID)
 
 	if kfkErr != nil {
 		return kfkErr

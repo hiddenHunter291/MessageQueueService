@@ -5,8 +5,11 @@ import (
 	"message_queue_service/tests/mock_repos"
 )
 
-var MockUserRepo = new(mock_repos.MockUserRepo)
-var MockProductRepo = new(mock_repos.MockProductRepo)
+var (
+	MockUserRepo    = new(mock_repos.MockUserRepo)
+	MockProductRepo = new(mock_repos.MockProductRepo)
+	MockProducer    = new(mock_repos.MockProducer)
+)
 
 func InitializeMockFunctions(functions []func() *mock.Call) []*mock.Call {
 	var mockCalls = make([]*mock.Call, 0)
