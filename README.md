@@ -1,4 +1,4 @@
-# E-commerce Message Queue Service
+# Message Queue Service
 
 Overview
 
